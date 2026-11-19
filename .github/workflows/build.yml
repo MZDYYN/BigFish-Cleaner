@@ -1,0 +1,42 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: 编译
+        run: dotnet build CleanC.csproj -c Release -r win-x64
+
+      - name: 发布（文件夹版）
+        run: dotnet publish CleanC.csproj -c Release -r win-x64 --self-contained false -o dist/folder
+
+      - name: 补齐 XAML 编译产物
+        shell: pwsh
+        run: |
+          $bin = "bin\Release\net8.0-windows10.0.19041.0\win-x64"
+          Copy-Item "$bin\*.xbf" "dist\folder" -Force
+
+      - name: 压缩为 zip
+        shell: pwsh
+        run: Compress-Archive -Path "dist\folder\*" -DestinationPath "dist\大肥鱼C盘清理工具-win-x64.zip"
+
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: 大肥鱼C盘清理工具-win-x64
+          path: dist/大肥鱼C盘清理工具-win-x64.zip

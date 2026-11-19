@@ -1,0 +1,26 @@
+# 构建产物
+[Bb]in/
+[Oo]bj/
+out_single/
+publish/
+dist/
+
+# 单文件打包中间产物
+启动器/stage/
+启动器/payload.zip
+
+# 运行时生成的数据（含个人缓存列表与勾选记录）
+rules.json
+selection.json
+clean-log-*.txt
+scan-report-*.csv
+
+# VS / Rider
+.vs/
+.idea/
+*.user
+*.suo
+
+# 系统
+Thumbs.db
+desktop.ini

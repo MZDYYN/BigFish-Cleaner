@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>CleanC</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
+    <EnableMsixTooling>false</EnableMsixTooling>
+    <Nullable>disable</Nullable>
+    <AssemblyName>大肥鱼C盘清理工具v0.1</AssemblyName>
+    <Product>大肥鱼C盘清理工具v0.1</Product>
+    <AssemblyTitle>大肥鱼C盘清理工具v0.1</AssemblyTitle>
+    <Company>大肥鱼</Company>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <LangVersion>latest</LangVersion>
+    <!-- 关掉 MRT/PRI 资源生成：unpackaged 应用不需要，也避免依赖 VS 的任务 DLL -->
+    <EnableCoreMrtTooling>false</EnableCoreMrtTooling>
+    <EnableDefaultPriItems>false</EnableDefaultPriItems>
+    <GeneratePriFile>false</GeneratePriFile>
+    <AppxPackage>false</AppxPackage>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- 启动器是独立的 net48 小程序，不参与主项目编译 -->
+    <Compile Remove="启动器\**" />
+    <None Include="启动器\**" />
+    <Compile Remove="dist\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app.ico" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.*" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.*" />
+  </ItemGroup>
+</Project>
